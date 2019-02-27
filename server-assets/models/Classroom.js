@@ -2,9 +2,11 @@ let mongoose = require('mongoose')
 let Teacher = require('./Teacher')
 let Student = require('./Student')
 let Schema = mongoose.Schema
+let ObjectId = Schema.Types.ObjectId
 
 let classroom = new Schema({
-  name: { type: String, required: true }
+  room: { type: Number, required: true },
+  school: { type: ObjectId, ref: 'School', virtual: true }
 })
 
 classroom.pre('remove', next => {

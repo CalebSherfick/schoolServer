@@ -6,8 +6,7 @@ let Schema = mongoose.Schema
 
 
 let school = new Schema({
-  name: { type: String, required: true },
-  classroom: { type: Schema.Types.ObjectId, ref: 'Classroom', virtual: true }
+  name: { type: String, required: true }
 })
 
 school.pre('remove', next => {
