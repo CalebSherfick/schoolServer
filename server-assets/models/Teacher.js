@@ -5,11 +5,12 @@ let ObjectId = Schema.Types.ObjectId
 
 let teacher = new Schema({
   name: { type: String, required: true },
-  classroom: { type: ObjectId, ref: 'Classroom', virtual: true }
+  classroom: { type: ObjectId, ref: 'Classroom', required: true },
+  school: { type: ObjectId, ref: 'School', required: true }
 })
 
 teacher.pre('remove', next => {
-  Promise.all([Student.remove({ teacher: this._id })])
+  Student.remove({ teacher: this._id })
     .then(() => next())
     .catch(err => next(err))
 })

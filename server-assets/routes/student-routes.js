@@ -3,14 +3,14 @@ let router = require('express').Router()
 
 //GET ALL
 router.get('', (req, res, next) => {
-  Students.find({})
+  Students.find({}).populate({ path: 'teacher', populate: { path: 'classroom', populate: { path: 'school' } } })
     .then(students => res.send(students))
     .catch(err => res.status(400).send(err))
 })
 
 //GET ONE BY ID
 router.get('/:id', (req, res, next) => {
-  Students.findById(req.params.id)
+  Students.findById(req.params.id).populate({ path: 'teacher', populate: { path: 'classroom', populate: { path: 'school' } } })
     .then(student => res.send(student))
     .catch(err => res.status(400).send(err))
 })
@@ -31,7 +31,7 @@ router.put('/:id', (req, res, next) => {
 
 //DELETE SCHOOL
 router.delete('/:id', (req, res, next) => {
-  Students.findByIdAndDelete(req.params.id)
+  Students.remove({ _id: req.params.id })
     .then(() => res.send(`Student @${req.params.id} has been Deleted`))
     .catch(err => res.status(400).send(err))
 })

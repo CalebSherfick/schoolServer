@@ -10,9 +10,16 @@ let school = new Schema({
 })
 
 school.pre('remove', next => {
+  console.log("something")
   Promise.all([Classroom.remove({ school: this._id }), Teacher.remove({ school: this._id }), Student.remove({ school: this._id })])
-    .then(() => next())
-    .catch(err => next(err))
+    .then(() => {
+      console.log("something")
+      next()
+    })
+    .catch(err => {
+      console.log(err)
+      next(err)
+    })
 })
 
 module.exports = mongoose.model('School', school)

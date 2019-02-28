@@ -31,8 +31,14 @@ router.put('/:id', (req, res, next) => {
 
 //DELETE SCHOOL
 router.delete('/:id', (req, res, next) => {
-  Schools.findByIdAndDelete(req.params.id)
-    .then(() => res.send(`School @${req.params.id} has been Deleted`))
+  Schools.findById(req.params.id)
+    .then(school => {
+      school.remove()
+        .then(() => {
+          res.send(`School @${school._id} has been Deleted`)
+        })
+    })
+
     .catch(err => res.status(400).send(err))
 })
 
